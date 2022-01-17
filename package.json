@@ -4,6 +4,7 @@
   "description": "A tiny pure JavaScript sticky table.",
   "main": "index.js",
   "scripts": {
+    "start": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -16,5 +17,16 @@
   "bugs": {
     "url": "https://github.com/zhitkovkostya/vanilla-js-sticky-table/issues"
   },
-  "homepage": "https://github.com/zhitkovkostya/vanilla-js-sticky-table#readme"
+  "homepage": "https://github.com/zhitkovkostya/vanilla-js-sticky-table#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-clean": "^0.4.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.9",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-uglify": "^3.0.2",
+    "sass": "^1.48.0"
+  }
 }
