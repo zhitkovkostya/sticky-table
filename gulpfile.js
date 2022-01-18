@@ -24,7 +24,8 @@ function scripts() {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./dist'))
+        .pipe(gulp.dest('./demo'));
 }
 
 
@@ -38,8 +39,11 @@ function styles() {
         .pipe(rename({
             suffix: '.min'
         }))
-        .pipe(gulp.dest('./dist'));
+        .pipe(gulp.dest('./dist'))
+        .pipe(gulp.dest('./demo'));
 }
+
+
 
 function reset() {
     return gulp.src(['dist'], { 

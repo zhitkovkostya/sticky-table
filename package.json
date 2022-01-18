@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "gulp",
+    "build": "gulp",
+    "publish": "npm run build && gh-pages -d demo",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,6 +22,7 @@
   "homepage": "https://github.com/zhitkovkostya/vanilla-js-sticky-table#readme",
   "dependencies": {},
   "devDependencies": {
+    "gh-pages": "^3.2.3",
     "gulp": "^4.0.2",
     "gulp-clean": "^0.4.0",
     "gulp-concat": "^2.6.1",
