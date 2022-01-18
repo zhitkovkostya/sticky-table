@@ -14,7 +14,7 @@ const banner = ['/**',
     ''].join('\n');
 
 
-gulp.task('scripts', function () {
+function scripts() {
     return gulp.src(['./src/scripts/**/*.js'])
         .pipe(concat('bundle.js'))
         .pipe(uglify())
@@ -25,9 +25,10 @@ gulp.task('scripts', function () {
             suffix: '.min'
         }))
         .pipe(gulp.dest('./dist'));
-});
+}
 
-gulp.task('styles', function () {
+
+function styles() {
     return gulp.src(['./src/styles/styles.scss'])
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
         .pipe(concat('styles.css'))
@@ -38,11 +39,18 @@ gulp.task('styles', function () {
             suffix: '.min'
         }))
         .pipe(gulp.dest('./dist'));
-});
+}
 
-gulp.task('clean', function () {
-    return gulp.src(['dist'], { read: false, allowEmpty: true })
+function reset() {
+    return gulp.src(['dist'], { 
+            read: false,
+            allowEmpty: true 
+        })
         .pipe(clean());
-});
+}
 
-gulp.task('default', gulp.series('clean', 'scripts', 'styles'))
+
+exports.scripts = scripts;
+exports.styles = styles;
+exports.reset = reset;
+exports.default = gulp.series(reset, scripts, styles);
