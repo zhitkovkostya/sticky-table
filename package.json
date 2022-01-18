@@ -19,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/zhitkovkostya/vanilla-js-sticky-table/issues"
   },
-  "homepage": "https://github.com/zhitkovkostya/vanilla-js-sticky-table#readme",
+  "homepage": "https://zhitkovkostya.github.io/vanilla-js-sticky-table",
   "dependencies": {},
   "devDependencies": {
     "gh-pages": "^3.2.3",
