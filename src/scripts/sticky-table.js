@@ -1,3 +1,5 @@
+const { throttle } = require('./throttle');
+
 class StickyTable {
     scrollLeft = 0;
     el = null;
@@ -190,3 +192,5 @@ class StickyTable {
         this.bodyWrapperElement.addEventListener('scroll', this._handleBodyWrapperHorizontalScrollThrottled, false);
     }
 }
+
+exports.StickyTable = StickyTable;

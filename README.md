@@ -22,6 +22,7 @@ yarn add vanilla-js-sticky-table
 
 ```js
 document.addEventListener('DOMContentLoaded', () => {
+    const { StickyTable } = window.VanillaStickyTable;
     const tableElements = document.querySelectorAll('.js-table');
 
     tableElements.forEach(tableElement => {
