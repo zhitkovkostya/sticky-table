@@ -10,3 +10,5 @@ function throttle(func, wait = 100) {
         }
     };
 }
+
+exports.throttle = throttle;

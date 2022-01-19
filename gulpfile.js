@@ -13,22 +13,6 @@ const banner = ['/**',
     ' */',
     ''].join('\n');
 
-
-function scripts() {
-    return gulp.src(['./src/scripts/**/*.js'])
-        .pipe(concat('bundle.js'))
-        .pipe(uglify())
-        .pipe(header(banner, {
-            pkg: package
-        }))
-        .pipe(rename({
-            suffix: '.min'
-        }))
-        .pipe(gulp.dest('./dist'))
-        .pipe(gulp.dest('./demo'));
-}
-
-
 function styles() {
     return gulp.src(['./src/styles/styles.scss'])
         .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
@@ -53,8 +37,6 @@ function reset() {
         .pipe(clean());
 }
 
-
-exports.scripts = scripts;
 exports.styles = styles;
 exports.reset = reset;
-exports.default = gulp.series(reset, scripts, styles);
+exports.default = gulp.series(reset, styles);

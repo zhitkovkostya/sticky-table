@@ -6,6 +6,14 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <style>
+        body {
+            padding: 10rem 5rem;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        }
+    </style>
     <link href="styles.min.css" rel="stylesheet"/>
 </head>
 <body>
@@ -263,6 +271,16 @@
         </tbody>
     </table>
 
-    <script src="bundle.min.js"></script>
+    <script src="bundle.min.js" type="module"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const { StickyTable } = window.VanillaStickyTable;
+            const tableElements = document.querySelectorAll('.js-table');
+
+            tableElements.forEach(tableElement => {
+                new StickyTable(tableElement);
+            })
+        });
+    </script>
 </body>
 </html>
