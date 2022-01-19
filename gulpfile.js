@@ -1,7 +1,5 @@
 const package = require('./package.json');
 const gulp = require('gulp');
-const clean = require('gulp-clean');
-const uglify = require('gulp-uglify');
 const header = require('gulp-header');
 const concat = require('gulp-concat');
 const sass = require('gulp-sass')(require('sass'));
@@ -27,16 +25,5 @@ function styles() {
         .pipe(gulp.dest('./demo'));
 }
 
-
-
-function reset() {
-    return gulp.src(['dist'], { 
-            read: false,
-            allowEmpty: true 
-        })
-        .pipe(clean());
-}
-
 exports.styles = styles;
-exports.reset = reset;
-exports.default = gulp.series(reset, styles);
+exports.default = gulp.series(styles);
