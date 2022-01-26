@@ -1,4 +1,4 @@
 
 const {StickyTable} = require('./sticky-table');
 
-exports.StickyTable = StickyTable;
+module.exports = StickyTable;

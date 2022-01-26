@@ -8,11 +8,11 @@ export default {
     input: 'src/index.js',
     output: [{
         file: 'dist/bundle.min.js',
-        name: 'VanillaStickyTable',
+        name: 'StickyTable',
         format: 'umd'
     }, {
         file: 'demo/bundle.min.js',
-        name: 'VanillaStickyTable',
+        name: 'StickyTable',
         format: 'umd'
     }],
     plugins: [
