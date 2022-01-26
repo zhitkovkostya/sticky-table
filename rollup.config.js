@@ -1,4 +1,5 @@
 import commonjs from '@rollup/plugin-commonjs';
+import eslint from '@rollup/plugin-eslint';
 import banner from 'rollup-plugin-banner';
 import { uglify } from 'rollup-plugin-uglify';
 
@@ -16,6 +17,7 @@ export default {
         format: 'umd'
     }],
     plugins: [
+        eslint(),
         commonjs(),
         uglify(),
         banner(bannerText)

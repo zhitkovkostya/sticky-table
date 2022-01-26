@@ -1,12 +1,6 @@
 const { throttle } = require('./throttle');
 
 class StickyTable {
-    el = null;
-    wrapperElement = null;
-    headWrapperElement = null;
-    bodyWrapperElement = null;
-    scrollLeft = 0;
-
     /**
      * Initial render of the table.
      * 

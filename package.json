@@ -24,6 +24,8 @@
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
+    "@rollup/plugin-eslint": "^8.0.1",
+    "eslint": "^8.7.0",
     "gh-pages": "^3.2.3",
     "rimraf": "^3.0.2",
     "rollup": "^2.64.0",
