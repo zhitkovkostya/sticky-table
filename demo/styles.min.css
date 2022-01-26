@@ -1,5 +1,0 @@
-/**
- * Vanilla Javascript Sticky Table v1.0.0
- * https://zhitkovkostya.github.io/vanilla-js-sticky-table
- */
-*{box-sizing:border-box}.table-head-wrapper,.table-body-wrapper{overflow-x:auto}.table-head-wrapper--fixed{position:fixed;top:0;z-index:2}.table__head--hidden{visibility:collapse}.table__head--hidden .table__cell{line-height:0;padding-top:0;padding-bottom:0}

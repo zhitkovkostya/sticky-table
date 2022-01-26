@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    padding: 20rem 1rem;
+    margin: 0;
+    background-color: #f2f2f2;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.card {
+    max-width: 80rem;
+    margin: 0 auto;
+}
+
+.table {
+    border-collapse: collapse;
+}
+
+.table__head .table__cell {
+    font-weight: 700;
+}
+
+.table__cell {
+    height: 3rem;
+    padding: 0 2rem;
+    background-color: #fff;
+    border-bottom: 1px solid #dde5ed;
+    white-space: nowrap;
+    text-align: left;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 1;
+    color: #778699;
+    background-clip: padding-box;
+}
+
+.table__cell--right {
+    text-align: right;
+}
+
+.user {
+    display: inline-flex;
+    align-items: center;
+}
+
+.user__image {
+    width: 2rem;
+    height: 2rem;
+    margin-right: .8rem;
+    border-radius: 2rem;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    height: 1.4rem;
+    padding: .2rem .8rem;
+    border-radius: .8rem;
+    font-size: .8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05rem;
+    white-space: nowrap;
+}
+
+.badge--yellow {
+    background-color: #f9f646;
+    color: #636244;
+}
+
+.badge--orange {
+    background-color: #EE6055;
+    color: #fff;
+}
+
+.badge--blue {
+    background-color: #91C4F2;
+    color: #1b2833;
+}
+
+.badge--green {
+    background-color: #42E2B8;
+    color: #0b4233;
+}
+
+.badge--brown {
+    background-color: #86615C;
+    color: #fff;
+}
+
+.badge--grey {
+    background-color: #bdc3c7;
+    color: #4c4c4c;
+}
+
+.badge--black {
+    background-color: #565554;
+    color: #fff;
+}
+
+.badge--white {
+    background-color: #fff;
+    border: 1px solid #bdc3c7;
+    color: #4c4c4c;
+}

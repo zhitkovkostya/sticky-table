@@ -32,7 +32,7 @@ class StickyTable {
     _wrapTable() {
         const tableWrapperElement = document.createElement('div');
 
-        tableWrapperElement.className = 'table-wrapper js-table-wrapper';
+        tableWrapperElement.className = 'js-table-wrapper';
 
         this.el.parentNode.insertBefore(tableWrapperElement, this.el);
         tableWrapperElement.append(this.el);
@@ -44,18 +44,29 @@ class StickyTable {
      */
     _wrapTableHead() {
         const tableHeadParentElement = document.createElement('table');
-        const tableHeadCloneElement = this.el.tHead.cloneNode(true);
+        const tableHeadOriginalElement = this.el.tHead;
+        const tableHeadOriginalCellElements = Array.from(tableHeadOriginalElement.querySelectorAll('.js-table-cell'));
+        const tableHeadCloneElement = tableHeadOriginalElement.cloneNode(true);
 
-        this.el.tHead.classList.add('table__head--hidden');
+        // Visibility collapse hides the table head visually, but makes it visible for screen readers.
+        tableHeadOriginalElement.style.visibility = 'collapse';
+        // Safari treats `visibility: collapse` like hidden leaving a white gap, so we hide inner cells manually.
+        tableHeadOriginalCellElements.forEach(tableCellElement => {
+            tableCellElement.style.lineHeight = 0;
+            tableCellElement.style.paddingTop = 0;
+            tableCellElement.style.paddingBottom = 0;
+        });
 
         tableHeadParentElement.classList.add('table');
 
         this.headWrapperElement = document.createElement('div');
 
-        this.headWrapperElement.className = 'table-head-wrapper js-table-head-wrapper';
+        this.headWrapperElement.className = 'js-table-head-wrapper';
+        this.headWrapperElement.dataset.isFixed = false;
+        this.headWrapperElement.style.overflowX = 'auto';
         this.headWrapperElement.ariaHidden = true;
         this.headWrapperElement
-            .appendChild(tableHeadParentElement)
+            .appendChild(tableHeadParentElement) 
             .appendChild(tableHeadCloneElement);
 
         this.wrapperElement.insertBefore(this.headWrapperElement, this.el);
@@ -70,7 +81,8 @@ class StickyTable {
     _wrapTableBody() {
         this.bodyWrapperElement = document.createElement('div');
 
-        this.bodyWrapperElement.className = 'table-body-wrapper js-table-body-wrapper';
+        this.bodyWrapperElement.className = 'js-table-body-wrapper';
+        this.bodyWrapperElement.style.overflowX = 'auto';
         this.wrapperElement.insertBefore(this.bodyWrapperElement, this.el);
         this.bodyWrapperElement.appendChild(this.el);
 
@@ -105,10 +117,9 @@ class StickyTable {
      * Fixes table head to the top of the viewport.
      */
     _syncHeadPosition() {
-        const headFixedClassName = 'table-head-wrapper--fixed';
-        const isHeadFixed = this.headWrapperElement.classList.contains(headFixedClassName);
+        const isHeadFixed = this.headWrapperElement.dataset.isFixed === 'true';
         const {
-            bottom: headWrapperOffsetBottom,
+            bottom: headWrapperOffsetBottom, 
             width: headWrapperWidth,
             height: headWrapperHeight
         } = this.headWrapperElement.getBoundingClientRect();
@@ -117,14 +128,20 @@ class StickyTable {
             width: bodyWrapperWidth,
         } = this.bodyWrapperElement.getBoundingClientRect();
 
-        if (isHeadFixed && bodyWrapperOffestTop >= headWrapperHeight) {            
-            this.bodyWrapperElement.style.marginTop = null;
+        if (isHeadFixed && bodyWrapperOffestTop >= headWrapperHeight) {
+            this.headWrapperElement.style.position = null;
+            this.headWrapperElement.style.top = null;
+            this.headWrapperElement.style.zIndex = null;
             this.headWrapperElement.style.width = null;
-            this.headWrapperElement.classList.remove(headFixedClassName);
+            this.bodyWrapperElement.style.marginTop = null;
+            this.headWrapperElement.dataset.isFixed = false;
         } else if (!isHeadFixed && headWrapperOffsetBottom <= headWrapperHeight) {
-            this.bodyWrapperElement.style.marginTop = headWrapperHeight + 'px';
+            this.headWrapperElement.style.position = 'fixed';
+            this.headWrapperElement.style.top = 0;
+            this.headWrapperElement.style.zIndex = 2;
             this.headWrapperElement.style.width = bodyWrapperWidth + 'px';
-            this.headWrapperElement.classList.add(headFixedClassName);
+            this.bodyWrapperElement.style.marginTop = headWrapperHeight + 'px';
+            this.headWrapperElement.dataset.isFixed = true;
         }
 
         // Sync table head width with its body on window resize
