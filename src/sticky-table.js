@@ -120,28 +120,30 @@ class StickyTable {
     _syncHeadPosition() {
         const isHeadFixed = this.headWrapperElement.dataset.isFixed === 'true';
         const {
-            bottom: headWrapperOffsetBottom, 
             width: headWrapperWidth,
             height: headWrapperHeight
         } = this.headWrapperElement.getBoundingClientRect();
         const {
             top: bodyWrapperOffestTop,
             width: bodyWrapperWidth,
+            height: bodyWrapperHeight
         } = this.bodyWrapperElement.getBoundingClientRect();
+        const isHeadTopInViewport = bodyWrapperOffestTop > headWrapperHeight;
+        const isBodyBottomOutsideViewport = bodyWrapperHeight + bodyWrapperOffestTop - headWrapperHeight <= 0;
 
-        if (isHeadFixed && bodyWrapperOffestTop >= headWrapperHeight) {
+        if (isHeadFixed && (isHeadTopInViewport || isBodyBottomOutsideViewport)) {
             this.headWrapperElement.style.position = null;
             this.headWrapperElement.style.top = null;
             this.headWrapperElement.style.zIndex = null;
             this.headWrapperElement.style.width = null;
-            this.bodyWrapperElement.style.marginTop = null;
+            this.bodyWrapperElement.style.paddingTop = null;
             this.headWrapperElement.dataset.isFixed = false;
-        } else if (!isHeadFixed && headWrapperOffsetBottom <= headWrapperHeight) {
+        } else if (!isHeadFixed && !isHeadTopInViewport && !isBodyBottomOutsideViewport) {
             this.headWrapperElement.style.position = 'fixed';
             this.headWrapperElement.style.top = 0;
             this.headWrapperElement.style.zIndex = 2;
             this.headWrapperElement.style.width = bodyWrapperWidth + 'px';
-            this.bodyWrapperElement.style.marginTop = headWrapperHeight + 'px';
+            this.bodyWrapperElement.style.paddingTop = headWrapperHeight + 'px';
             this.headWrapperElement.dataset.isFixed = true;
         }
 
