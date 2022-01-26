@@ -17,7 +17,7 @@ export default {
     }],
     plugins: [
         commonjs(),
-        // uglify(),
+        uglify(),
         banner(bannerText)
     ]
 }
