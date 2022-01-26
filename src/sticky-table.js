@@ -144,7 +144,6 @@ class StickyTable {
             this.headWrapperElement.dataset.isFixed = false;
             isHeadFixed = false;
         } else if (!isHeadFixed && !isHeadTopInViewport && !isBodyBottomOutsideViewport) {
-            debugger
             this.headWrapperElement.style.position = 'fixed';
             this.headWrapperElement.style.top = 0;
             this.headWrapperElement.style.zIndex = 2;
