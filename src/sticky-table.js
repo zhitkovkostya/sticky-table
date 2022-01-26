@@ -45,13 +45,14 @@ class StickyTable {
     _wrapTableHead() {
         const tableHeadParentElement = document.createElement('table');
         const tableHeadOriginalElement = this.el.tHead;
-        const tableHeadOriginalCellElements = Array.from(tableHeadOriginalElement.querySelectorAll('.js-table-cell'));
+        const tableHeadOriginalRows = Array.from(tableHeadOriginalElement.rows);
+        const tableHeadOriginalCells = Array.from(tableHeadOriginalRows.reduce((cells, rowElement) => rowElement.cells, []));
         const tableHeadCloneElement = tableHeadOriginalElement.cloneNode(true);
 
         // Visibility collapse hides the table head visually, but makes it visible for screen readers.
         tableHeadOriginalElement.style.visibility = 'collapse';
         // Safari treats `visibility: collapse` like hidden leaving a white gap, so we hide inner cells manually.
-        tableHeadOriginalCellElements.forEach(tableCellElement => {
+        tableHeadOriginalCells.forEach(tableCellElement => {
             tableCellElement.style.lineHeight = 0;
             tableCellElement.style.paddingTop = 0;
             tableCellElement.style.paddingBottom = 0;

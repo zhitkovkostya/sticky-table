@@ -5,7 +5,7 @@ import { uglify } from 'rollup-plugin-uglify';
 const bannerText = 'Vanilla Javascript Sticky Table v<%= pkg.version %>\n<%= pkg.homepage %>';
 
 export default {
-    input: 'src/scripts/index.js',
+    input: 'src/index.js',
     output: [{
         file: 'dist/bundle.min.js',
         name: 'VanillaStickyTable',

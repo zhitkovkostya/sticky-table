@@ -20,6 +20,27 @@ yarn add vanilla-js-sticky-table
 
 ## Usage
 
+```html
+<table class="js-table">
+    <thead>
+        <tr>
+            <th>...</th>
+            <th>...</th>
+            ...
+            <th>...</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>...</td>
+            <td>...</td>
+            ...
+            <td>...</td>
+        </tr>
+    </tbody>
+</table>
+```
+
 ```js
 document.addEventListener('DOMContentLoaded', () => {
     const { StickyTable } = window.VanillaStickyTable;
