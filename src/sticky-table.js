@@ -1,9 +1,11 @@
 const { throttle } = require('./throttle');
 
 class StickyTable {
-    scrollLeft = 0;
     el = null;
     wrapperElement = null;
+    headWrapperElement = null;
+    bodyWrapperElement = null;
+    scrollLeft = 0;
 
     /**
      * Initial render of the table.
@@ -118,7 +120,7 @@ class StickyTable {
      * Fixes table head to the top of the viewport.
      */
     _syncHeadPosition() {
-        const isHeadFixed = this.headWrapperElement.dataset.isFixed === 'true';
+        let isHeadFixed = this.headWrapperElement.dataset.isFixed === 'true';
         const {
             width: headWrapperWidth,
             height: headWrapperHeight
@@ -129,6 +131,7 @@ class StickyTable {
             height: bodyWrapperHeight
         } = this.bodyWrapperElement.getBoundingClientRect();
         const bodyWrapperOffestLimit = isHeadFixed ? 0 : headWrapperHeight;
+        const bodyWrapperBottomLimit = headWrapperHeight * 2;
         const isHeadTopInViewport = bodyWrapperOffestTop >= bodyWrapperOffestLimit;
         const isBodyBottomOutsideViewport = bodyWrapperHeight + bodyWrapperOffestTop - headWrapperHeight <= 0;
 
@@ -139,13 +142,22 @@ class StickyTable {
             this.headWrapperElement.style.width = null;
             this.bodyWrapperElement.style.paddingTop = null;
             this.headWrapperElement.dataset.isFixed = false;
+            isHeadFixed = false;
         } else if (!isHeadFixed && !isHeadTopInViewport && !isBodyBottomOutsideViewport) {
+            debugger
             this.headWrapperElement.style.position = 'fixed';
             this.headWrapperElement.style.top = 0;
             this.headWrapperElement.style.zIndex = 2;
             this.headWrapperElement.style.width = bodyWrapperWidth + 'px';
             this.bodyWrapperElement.style.paddingTop = headWrapperHeight + 'px';
             this.headWrapperElement.dataset.isFixed = true;
+            isHeadFixed = true;
+        }
+
+        if (isHeadFixed && bodyWrapperHeight + bodyWrapperOffestTop < bodyWrapperBottomLimit) {
+            this.headWrapperElement.style.transform = 'translate3d(0, ' + (bodyWrapperHeight + bodyWrapperOffestTop - bodyWrapperBottomLimit) + 'px, 0)';
+        } else {
+            this.headWrapperElement.style.transform = null;
         }
 
         // Sync table head width with its body on window resize
