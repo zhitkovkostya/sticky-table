@@ -3,282 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
-    <style>
-        body {
-            padding: 10rem 5rem;
-            margin: 0;
-            background-color: #f2f2f2;
-            font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        }
-    </style>
-    <link href="styles.min.css" rel="stylesheet"/>
+    <link href="styles.css" rel="stylesheet"/>
 </head>
 <body>
-    <table class="table js-table">
-        <thead class="table__head">
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked">#</th>
-                <th class="table__cell">City</th>
-                <th class="table__cell">State</th>
-                <th class="table__cell table__cell--right">Quality of Life Index</th>
-                <th class="table__cell table__cell--right">Purchasing Power Index</th>
-                <th class="table__cell table__cell--right">Safety Index</th>
-                <th class="table__cell table__cell--right">Health Care Index</th>
-                <th class="table__cell table__cell--right">Cost of Livin Index</th>
-                <th class="table__cell"></th>
-                <th class="table__cell"></th>
-                <th class="table__cell"></th>
-            </tr>
-        </thead>
-        <tbody class="table__body">
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">1</th>
-                <td class="table__cell">Raleigh</td>
-                <td class="table__cell">NC</td>
-                <td class="table__cell table__cell--right">222.73</td>
-                <td class="table__cell table__cell--right">178.79</td>
-                <td class="table__cell table__cell--right">74.05</td>
-                <td class="table__cell table__cell--right">70.94</td>
-                <td class="table__cell table__cell--right">74.05</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">2</th>
-                <td class="table__cell">Madison</td>
-                <td class="table__cell">WI</td>
-                <td class="table__cell table__cell--right">206.03</td>
-                <td class="table__cell table__cell--right">134.10</td>
-                <td class="table__cell table__cell--right">64.39</td>
-                <td class="table__cell table__cell--right">78.65</td>
-                <td class="table__cell table__cell--right">64.39</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">3</th>
-                <td class="table__cell">Austin</td>
-                <td class="table__cell">TX</td>
-                <td class="table__cell table__cell--right">200.00</td>
-                <td class="table__cell table__cell--right">159.06</td>
-                <td class="table__cell table__cell--right">69.17</td>
-                <td class="table__cell table__cell--right">70.80</td>
-                <td class="table__cell table__cell--right">69.17</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">4</th>
-                <td class="table__cell">Dallas</td>
-                <td class="table__cell">TX</td>
-                <td class="table__cell table__cell--right">197.24</td>
-                <td class="table__cell table__cell--right">182.53</td>
-                <td class="table__cell table__cell--right">66.84</td>
-                <td class="table__cell table__cell--right">66.04</td>
-                <td class="table__cell table__cell--right">66.84</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">5</th>
-                <td class="table__cell">San Diego</td>
-                <td class="table__cell">CA</td>
-                <td class="table__cell table__cell--right">195.80</td>
-                <td class="table__cell table__cell--right">141.25</td>
-                <td class="table__cell table__cell--right">72.41</td>
-                <td class="table__cell table__cell--right">70.85</td>
-                <td class="table__cell table__cell--right">72.41</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">6</th>
-                <td class="table__cell">Columbus</td>
-                <td class="table__cell">OH</td>
-                <td class="table__cell table__cell--right">195.78</td>
-                <td class="table__cell table__cell--right">131.34</td>
-                <td class="table__cell table__cell--right">70.72</td>
-                <td class="table__cell table__cell--right">72.93</td>
-                <td class="table__cell table__cell--right">70.72</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">7</th>
-                <td class="table__cell">Charlotte</td>
-                <td class="table__cell">NC</td>
-                <td class="table__cell table__cell--right">194.84</td>
-                <td class="table__cell table__cell--right">138.87</td>
-                <td class="table__cell table__cell--right">56.64</td>
-                <td class="table__cell table__cell--right">73.56</td>
-                <td class="table__cell table__cell--right">78.40</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">8</th>
-                <td class="table__cell">San Jose</td>
-                <td class="table__cell">CA</td>
-                <td class="table__cell table__cell--right">191.06</td>
-                <td class="table__cell table__cell--right">168.51</td>
-                <td class="table__cell table__cell--right">57.37</td>
-                <td class="table__cell table__cell--right">68.83</td>
-                <td class="table__cell table__cell--right">72.05</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">4</th>
-                <td class="table__cell">Dallas</td>
-                <td class="table__cell">TX</td>
-                <td class="table__cell table__cell--right">197.24</td>
-                <td class="table__cell table__cell--right">182.53</td>
-                <td class="table__cell table__cell--right">66.84</td>
-                <td class="table__cell table__cell--right">66.04</td>
-                <td class="table__cell table__cell--right">66.84</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">5</th>
-                <td class="table__cell">San Diego</td>
-                <td class="table__cell">CA</td>
-                <td class="table__cell table__cell--right">195.80</td>
-                <td class="table__cell table__cell--right">141.25</td>
-                <td class="table__cell table__cell--right">72.41</td>
-                <td class="table__cell table__cell--right">70.85</td>
-                <td class="table__cell table__cell--right">72.41</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">6</th>
-                <td class="table__cell">Columbus</td>
-                <td class="table__cell">OH</td>
-                <td class="table__cell table__cell--right">195.78</td>
-                <td class="table__cell table__cell--right">131.34</td>
-                <td class="table__cell table__cell--right">70.72</td>
-                <td class="table__cell table__cell--right">72.93</td>
-                <td class="table__cell table__cell--right">70.72</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">7</th>
-                <td class="table__cell">Charlotte</td>
-                <td class="table__cell">NC</td>
-                <td class="table__cell table__cell--right">194.84</td>
-                <td class="table__cell table__cell--right">138.87</td>
-                <td class="table__cell table__cell--right">56.64</td>
-                <td class="table__cell table__cell--right">73.56</td>
-                <td class="table__cell table__cell--right">78.40</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">8</th>
-                <td class="table__cell">San Jose</td>
-                <td class="table__cell">CA</td>
-                <td class="table__cell table__cell--right">191.06</td>
-                <td class="table__cell table__cell--right">168.51</td>
-                <td class="table__cell table__cell--right">57.37</td>
-                <td class="table__cell table__cell--right">68.83</td>
-                <td class="table__cell table__cell--right">72.05</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">4</th>
-                <td class="table__cell">Dallas</td>
-                <td class="table__cell">TX</td>
-                <td class="table__cell table__cell--right">197.24</td>
-                <td class="table__cell table__cell--right">182.53</td>
-                <td class="table__cell table__cell--right">66.84</td>
-                <td class="table__cell table__cell--right">66.04</td>
-                <td class="table__cell table__cell--right">66.84</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">5</th>
-                <td class="table__cell">San Diego</td>
-                <td class="table__cell">CA</td>
-                <td class="table__cell table__cell--right">195.80</td>
-                <td class="table__cell table__cell--right">141.25</td>
-                <td class="table__cell table__cell--right">72.41</td>
-                <td class="table__cell table__cell--right">70.85</td>
-                <td class="table__cell table__cell--right">72.41</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">6</th>
-                <td class="table__cell">Columbus</td>
-                <td class="table__cell">OH</td>
-                <td class="table__cell table__cell--right">195.78</td>
-                <td class="table__cell table__cell--right">131.34</td>
-                <td class="table__cell table__cell--right">70.72</td>
-                <td class="table__cell table__cell--right">72.93</td>
-                <td class="table__cell table__cell--right">70.72</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">7</th>
-                <td class="table__cell">Charlotte</td>
-                <td class="table__cell">NC</td>
-                <td class="table__cell table__cell--right">194.84</td>
-                <td class="table__cell table__cell--right">138.87</td>
-                <td class="table__cell table__cell--right">56.64</td>
-                <td class="table__cell table__cell--right">73.56</td>
-                <td class="table__cell table__cell--right">78.40</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-            <tr class="table__row">
-                <th class="table__cell table__cell--locked" scope="row">8</th>
-                <td class="table__cell">San Jose</td>
-                <td class="table__cell">CA</td>
-                <td class="table__cell table__cell--right">191.06</td>
-                <td class="table__cell table__cell--right">168.51</td>
-                <td class="table__cell table__cell--right">57.37</td>
-                <td class="table__cell table__cell--right">68.83</td>
-                <td class="table__cell table__cell--right">72.05</td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-                <td class="table__cell"></td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <table class="table js-table">
+            <thead class="table__head">
+                <tr class="table__row">
+                    <th class="table__cell">ID</th>
+                    <th class="table__cell">Character</th>
+                    <th class="table__cell">Alignment</th>
+                    <th class="table__cell">Gender</th>
+                    <th class="table__cell">Eye Color</th>
+                    <th class="table__cell">Race</th>
+                    <th class="table__cell">Hair Color</th>
+                    <th class="table__cell">Publisher</th>
+                    <th class="table__cell">Skin Color</th>
+                    <th class="table__cell table__cell--right">Height</th>
+                </tr>
+            </thead>
+            <tbody class="table__body">
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">1</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/a_bomb.jpg" class="user__image">A-Bomb</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--yellow">Yellow</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell"><span class="badge badge--blue">Blue</span></td>
+                    <td class="table__cell table__cell--right">203</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">2</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/abomination.jpg" class="user__image">Abomination</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--green">Green</span></td>
+                    <td class="table__cell">Human / Radiation</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell"><span class="badge badge--green">Green</span></td>
+                    <td class="table__cell table__cell--right">203</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">3</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/batman.jpg" class="user__image">Batman</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--blue">Blue</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">DC Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">188</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">4</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/birdman.jpg" class="user__image">Birdman</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">God / Eternal</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">Hanna-Barbera</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">193</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">5</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/black_widow.jpg" class="user__image">Black Widow</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Female</td>
+                    <td class="table__cell"><span class="badge badge--green">Green</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--orange">Auburn</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">170</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">6</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/blade.jpg" class="user__image">Blade</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--brown">Brown</span></td>
+                    <td class="table__cell">Vampire</td>
+                    <td class="table__cell"><span class="badge badge--black">Black</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">188</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">7</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/doctor_doom.jpg" class="user__image">Doctor Doom</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--brown">Brown</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--brown">Brown</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">201</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">8</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/doctor_octopus.jpg" class="user__image">Doctor Octopus</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--brown">Brown</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--brown">Brown</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">175</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">9</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/doctor_strange.jpg" class="user__image">Doctor Strange</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--grey">Grey</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--black">Black</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">188</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">10</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/kylo_ren.jpg" class="user__image">Kylo Ren</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">George Lucas</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">190</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">11</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/magneto.jpg" class="user__image">Magneto</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--grey">Grey</span></td>
+                    <td class="table__cell">Mutant</td>
+                    <td class="table__cell"><span class="badge badge--white">White</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">188</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">12</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/nebula.jpg" class="user__image">Nebula</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Female</td>
+                    <td class="table__cell"><span class="badge badge--blue">Blue</span></td>
+                    <td class="table__cell">Luphomoid</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell"><span class="badge badge--blue">Blue</span></td>
+                    <td class="table__cell table__cell--right">185</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">13</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/penguin.jpg" class="user__image">Penguin</div>
+                    </td>
+                    <td class="table__cell">👎 Bad</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--blue">Blue</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--black">Black</span></td>
+                    <td class="table__cell">DC Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">157</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">14</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/robin.jpg" class="user__image">Robin</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--blue">Blue</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--black">Black</span></td>
+                    <td class="table__cell">DC Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">185</td>
+                </tr>
+                <tr class="table__row">
+                    <th class="table__cell" scope="row">15</th>
+                    <td class="table__cell">
+                        <div class="user"><img src="assets/images/spider_man.jpg" class="user__image">Spider Man</div>
+                    </td>
+                    <td class="table__cell">👍 Good</td>
+                    <td class="table__cell">Male</td>
+                    <td class="table__cell"><span class="badge badge--brown">Brown</span></td>
+                    <td class="table__cell">Human</td>
+                    <td class="table__cell"><span class="badge badge--black">Black</span></td>
+                    <td class="table__cell">Marvel Comics</td>
+                    <td class="table__cell">--</td>
+                    <td class="table__cell table__cell--right">157</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 
     <script src="bundle.min.js" type="module"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const { StickyTable } = window.VanillaStickyTable;
             const tableElements = document.querySelectorAll('.js-table');
-
+        
             tableElements.forEach(tableElement => {
-                new StickyTable(tableElement);
+                new window.StickyTable(tableElement);
             })
         });
     </script>
