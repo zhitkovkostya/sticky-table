@@ -128,7 +128,8 @@ class StickyTable {
             width: bodyWrapperWidth,
             height: bodyWrapperHeight
         } = this.bodyWrapperElement.getBoundingClientRect();
-        const isHeadTopInViewport = bodyWrapperOffestTop > headWrapperHeight;
+        const bodyWrapperOffestLimit = isHeadFixed ? 0 : headWrapperHeight;
+        const isHeadTopInViewport = bodyWrapperOffestTop >= bodyWrapperOffestLimit;
         const isBodyBottomOutsideViewport = bodyWrapperHeight + bodyWrapperOffestTop - headWrapperHeight <= 0;
 
         if (isHeadFixed && (isHeadTopInViewport || isBodyBottomOutsideViewport)) {
