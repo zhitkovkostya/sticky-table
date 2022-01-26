@@ -49,9 +49,10 @@ class StickyTable {
         tableHeadOriginalElement.style.visibility = 'collapse';
         // Safari treats `visibility: collapse` like hidden leaving a white gap, so we hide inner cells manually.
         tableHeadOriginalCells.forEach(tableCellElement => {
-            tableCellElement.style.lineHeight = 0;
+            tableCellElement.style.height = 0;
             tableCellElement.style.paddingTop = 0;
             tableCellElement.style.paddingBottom = 0;
+            tableCellElement.style.lineHeight = 0;
         });
 
         tableHeadParentElement.classList.add('table');
