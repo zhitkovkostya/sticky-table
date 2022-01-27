@@ -1,8 +1,14 @@
 # sticky-table
 
-Vanilla JavaScript sticky table - accessible and super tiny
+![GitHub](https://img.shields.io/github/license/zhitkovkostya/sticky-table)
 
-*— Inspired by the blazing fast, lightweight, cross-platform and crazy popular [Vanilla JS](http://vanilla-js.com/)  framework.*
+> sticky-table is a library for sticky table headers written in TypeScript. With this library you can easily set sticky table headers on your website. It's responsive, accessible and super tiny.
+
+## Features
+
+- Written in TypeScript, no dependencies needed
+- Lightweight (minified: ~5.0kb)
+- No additional CSS needed
 
 ## Install
 
@@ -51,9 +57,27 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 ```
 
+### Development
+
+Clone this repository and run
+
+```js
+npm start
+```
+
 ## Demo
 
 Check out the [demo](https://zhitkovkostya.github.io/sticky-table/)
+
+## Browser Compatibility
+
+Library is using ECMAScript 5 features.
+
+* IE 9+
+* Chrome 23+
+* Firefox 21+
+* Safari 6+
+* Opera 15+
 
 ## License
 
