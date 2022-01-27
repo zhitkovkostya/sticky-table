@@ -1,4 +1,4 @@
-# vanilla-js-sticky-table
+# sticky-table
 
 Vanilla JavaScript sticky table - accessible and super tiny
 
@@ -9,13 +9,13 @@ Vanilla JavaScript sticky table - accessible and super tiny
 ### npm
 
 ```
-npm install vanilla-js-sticky-table
+npm install sticky-table
 ```
 
 ### yarn
 
 ```
-yarn add vanilla-js-sticky-table
+yarn add sticky-table
 ```
 
 ## Usage
@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ## Demo
 
-Check out the [demo](https://zhitkovkostya.github.io/vanilla-js-sticky-table/)
+Check out the [demo](https://zhitkovkostya.github.io/sticky-table/)
 
 ## License
 

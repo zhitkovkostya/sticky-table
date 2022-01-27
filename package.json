@@ -1,5 +1,5 @@
 {
-  "name": "vanilla-js-sticky-table",
+  "name": "sticky-table",
   "version": "1.0.0",
   "description": "A tiny pure JavaScript sticky table.",
   "main": "index.js",
@@ -12,15 +12,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zhitkovkostya/vanilla-js-sticky-table.git"
+    "url": "git+https://github.com/zhitkovkostya/sticky-table.git"
   },
   "keywords": [],
   "author": "Konstantin Zhitkov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/zhitkovkostya/vanilla-js-sticky-table/issues"
+    "url": "https://github.com/zhitkovkostya/sticky-table/issues"
   },
-  "homepage": "https://zhitkovkostya.github.io/vanilla-js-sticky-table",
+  "homepage": "https://zhitkovkostya.github.io/sticky-table",
   "dependencies": {},
   "devDependencies": {
     "@rollup/plugin-commonjs": "^21.0.1",
