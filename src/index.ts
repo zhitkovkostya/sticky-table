@@ -12,7 +12,7 @@ export default class StickyTable {
     /**
      * Initial render of the table.
      * 
-     * @param {object} tableElement - Table DOM element.
+     * @param tableElement - Table DOM element.
      */
     constructor(tableElement: HTMLTableElement) {
         this.el = tableElement;
@@ -40,7 +40,7 @@ export default class StickyTable {
      * Wraps table in a new container.
      */
     _wrapTable() {
-        const tableWrapperElement = document.createElement('div');
+        const tableWrapperElement: HTMLElement = document.createElement('div');
 
         tableWrapperElement.className = 'js-table-wrapper';
 
@@ -201,7 +201,7 @@ export default class StickyTable {
      * @returns 
      */
     _syncHorizontalScroll(scrolledElement: HTMLElement, targetElement: HTMLElement) {
-        const scrollLeft = scrolledElement.scrollLeft;
+        const scrollLeft: number = scrolledElement.scrollLeft;
         // const tableRowHeadingElements = this.wrapperElement.querySelectorAll('.table__cell--locked');
 
         if (this.scrollLeft === scrollLeft) {
@@ -219,7 +219,7 @@ export default class StickyTable {
     /**
      * Handles horizontal scrolling.
      * 
-     * @param {object} event - Scroll event.
+     * @param event - Scroll event.
      */
     _handleHorizontalScroll(event: WheelEvent) {
         const scrolledElement = event.target as HTMLElement;
@@ -247,8 +247,8 @@ export default class StickyTable {
     /**
      * Executes the given function once in an interval.
      * 
-     * @param {function} func - callback function
-     * @param {number} wait - time to wait for next call
+     * @param func - callback function
+     * @param wait - time to wait for next call
      * @returns 
      */
     _throttle(func: Function, wait: number = 100): Function {
