@@ -15,7 +15,8 @@ export default class StickyTable {
         this.wrapperElement = null;
         this.headWrapperElement = null;
         this.bodyWrapperElement = null;
-        this.scrollLeft = 0;
+    this.scrollLeft
+     = 0;
 
         this._wrapTable();
         this._wrapTableHead();
