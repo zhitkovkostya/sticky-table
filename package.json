@@ -5,8 +5,6 @@
   "main": "index.js",
   "scripts": {
     "prepare": "husky install",
-    "precommit": "npm run format",
-    "prepush": "npm run lint && npm run test",
     "prebuild": "rimraf dist",
     "start": "rollup -cw",
     "build": "rollup -c",
