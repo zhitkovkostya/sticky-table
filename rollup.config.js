@@ -1,6 +1,5 @@
 import typescript from '@rollup/plugin-typescript';
 import { babel } from '@rollup/plugin-babel';
-import eslint from '@rollup/plugin-eslint';
 import banner from 'rollup-plugin-banner';
 import { uglify } from 'rollup-plugin-uglify';
 
@@ -23,7 +22,6 @@ export default {
             babelHelpers: 'bundled',
             extensions: ['ts']
         }),
-        eslint(),
         uglify(),
         banner(bannerText)
     ]

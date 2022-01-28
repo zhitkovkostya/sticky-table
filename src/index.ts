@@ -3,15 +3,11 @@ export default class StickyTable {
     wrapperElement: HTMLElement | null;
     headWrapperElement: HTMLElement | null;
     bodyWrapperElement: HTMLElement | null;
-    scrollLeft: number;
-    _handleWindowScrollThrottled: EventListener | null;
-    _handleWindowResizeThrottled: EventListener | null;
-    _handleHeadWrapperHorizontalScrollThrottled: EventListener | null;
-    _handleBodyWrapperHorizontalScrollThrottled: EventListener | null;
+    scrollLeft: any;
 
     /**
      * Initial render of the table.
-     * 
+     *
      * @param tableElement - Table DOM element.
      */
     constructor(tableElement: HTMLTableElement) {
@@ -27,11 +23,6 @@ export default class StickyTable {
         this._syncColumnWidth();
         this._syncHeadPosition();
 
-        this._handleWindowScrollThrottled = this._throttle(this._handleWindowScroll.bind(this), 20) as EventListener;
-        this._handleWindowResizeThrottled = this._throttle(this._handleWindowResize.bind(this), 20) as EventListener;
-        this._handleHeadWrapperHorizontalScrollThrottled = null;
-        this._handleBodyWrapperHorizontalScrollThrottled = null;
-
         window.addEventListener('scroll', this._handleWindowScrollThrottled.bind(this), false);
         window.addEventListener('resize', this._handleWindowResizeThrottled.bind(this));
     }
@@ -44,7 +35,9 @@ export default class StickyTable {
 
         tableWrapperElement.className = 'js-table-wrapper';
 
-        this.el.parentNode!.insertBefore(tableWrapperElement, this.el);
+        if (this.el.parentNode) {
+            this.el.parentNode.insertBefore(tableWrapperElement, this.el);
+        }
         tableWrapperElement.append(this.el);
         this.wrapperElement = tableWrapperElement;
     }
@@ -60,15 +53,20 @@ export default class StickyTable {
             throw new Error('<thead> is missing');
         }
 
-        const tableHeadOriginalRows: Array<HTMLTableRowElement> = Array.from(tableHeadOriginalElement.rows);
-        const tableHeadOriginalCellsByRow: Array<Array<HTMLTableCellElement>> = tableHeadOriginalRows.map(row => Array.from(row.cells));
-        const tableHeadOriginalCells: Array<HTMLTableCellElement> = ([] as Array<HTMLTableCellElement>).concat(...tableHeadOriginalCellsByRow);
+        const tableHeadOriginalRows: Array<HTMLTableRowElement> = Array.from(
+            tableHeadOriginalElement.rows
+        );
+        const tableHeadOriginalCellsByRow: Array<Array<HTMLTableCellElement>> =
+            tableHeadOriginalRows.map((row) => Array.from(row.cells));
+        const tableHeadOriginalCells: Array<HTMLTableCellElement> = (
+            [] as Array<HTMLTableCellElement>
+        ).concat(...tableHeadOriginalCellsByRow);
         const tableHeadCloneElement = tableHeadOriginalElement.cloneNode(true);
 
         // Visibility collapse hides the table head visually, but makes it visible for screen readers.
         tableHeadOriginalElement.style.visibility = 'collapse';
         // Safari treats `visibility: collapse` like hidden leaving a white gap, so we hide inner cells manually.
-        tableHeadOriginalCells.forEach(tableCellElement => {
+        tableHeadOriginalCells.forEach((tableCellElement) => {
             tableCellElement.style.height = '0';
             tableCellElement.style.paddingTop = '0';
             tableCellElement.style.paddingBottom = '0';
@@ -84,15 +82,18 @@ export default class StickyTable {
         this.headWrapperElement.style.overflowX = 'auto';
         this.headWrapperElement.ariaHidden = 'true';
         this.headWrapperElement
-            .appendChild(tableHeadParentElement) 
+            .appendChild(tableHeadParentElement)
             .appendChild(tableHeadCloneElement);
 
         if (this.wrapperElement) {
             this.wrapperElement.insertBefore(this.headWrapperElement, this.el);
         }
 
-        this._handleHeadWrapperHorizontalScrollThrottled = this._throttle(this._handleHorizontalScroll.bind(this), 10) as EventListener;
-        this.headWrapperElement.addEventListener('scroll', this._handleHeadWrapperHorizontalScrollThrottled.bind(this), false);
+        this.headWrapperElement.addEventListener(
+            'scroll',
+            this._handleHeadWrapperHorizontalScrollThrottled.bind(this),
+            false
+        );
     }
 
     /**
@@ -103,38 +104,48 @@ export default class StickyTable {
 
         this.bodyWrapperElement.className = 'js-table-body-wrapper';
         this.bodyWrapperElement.style.overflowX = 'auto';
-        
+
         if (this.wrapperElement) {
             this.wrapperElement.insertBefore(this.bodyWrapperElement, this.el);
         }
 
         this.bodyWrapperElement.appendChild(this.el);
 
-        this._handleBodyWrapperHorizontalScrollThrottled = this._throttle(this._handleHorizontalScroll.bind(this), 10) as EventListener;
-        this.bodyWrapperElement.addEventListener('scroll', this._handleBodyWrapperHorizontalScrollThrottled.bind(this), false);
+        this.bodyWrapperElement.addEventListener(
+            'scroll',
+            this._handleBodyWrapperHorizontalScrollThrottled.bind(this),
+            false
+        );
     }
 
     /**
      * Aligns hidden and visible table header widths.
      */
     _syncColumnWidth() {
-        const headTableElement: HTMLTableElement | null = this.headWrapperElement!.querySelector('table');
-        const bodyTableElement: HTMLTableElement | null = this.bodyWrapperElement!.querySelector('table');
+        const headTableElement: HTMLTableElement | null =
+            this.headWrapperElement && this.headWrapperElement.querySelector('table');
+        const bodyTableElement: HTMLTableElement | null =
+            this.bodyWrapperElement && this.bodyWrapperElement.querySelector('table');
 
         let headTableCellElement: HTMLTableCellElement;
         let bodyTableCellWidth: number;
 
-        if (!headTableElement || !bodyTableElement || !bodyTableElement.tHead || !headTableElement.tHead) {
+        if (
+            !headTableElement ||
+            !bodyTableElement ||
+            !bodyTableElement.tHead ||
+            !headTableElement.tHead
+        ) {
             return;
         }
 
-        for (let bodyTableRowElement of bodyTableElement.tHead.rows) {
-            for (let bodyTableCellElement of bodyTableRowElement.cells) {
+        for (const bodyTableRowElement of bodyTableElement.tHead.rows) {
+            for (const bodyTableCellElement of bodyTableRowElement.cells) {
                 bodyTableCellWidth = bodyTableCellElement.offsetWidth;
-                headTableCellElement = headTableElement
-                    .tHead
-                    .rows[bodyTableRowElement.rowIndex]
-                    .cells[bodyTableCellElement.cellIndex];
+                headTableCellElement =
+                    headTableElement.tHead.rows[bodyTableRowElement.rowIndex].cells[
+                        bodyTableCellElement.cellIndex
+                    ];
 
                 headTableCellElement.style.minWidth = `${bodyTableCellWidth}px`;
                 headTableCellElement.style.maxWidth = `${bodyTableCellWidth}px`;
@@ -151,19 +162,18 @@ export default class StickyTable {
         }
 
         let isHeadFixed = this.headWrapperElement.dataset.isFixed === 'true';
-        const {
-            width: headWrapperWidth,
-            height: headWrapperHeight
-        } = this.headWrapperElement.getBoundingClientRect();
+        const { width: headWrapperWidth, height: headWrapperHeight } =
+            this.headWrapperElement.getBoundingClientRect();
         const {
             top: bodyWrapperOffestTop,
             width: bodyWrapperWidth,
-            height: bodyWrapperHeight
+            height: bodyWrapperHeight,
         } = this.bodyWrapperElement.getBoundingClientRect();
         const bodyWrapperOffestLimit = isHeadFixed ? 0 : headWrapperHeight;
         const bodyWrapperBottomLimit = headWrapperHeight * 2;
         const isHeadTopInViewport = bodyWrapperOffestTop >= bodyWrapperOffestLimit;
-        const isBodyBottomOutsideViewport = bodyWrapperHeight + bodyWrapperOffestTop - headWrapperHeight <= 0;
+        const isBodyBottomOutsideViewport =
+            bodyWrapperHeight + bodyWrapperOffestTop - headWrapperHeight <= 0;
 
         if (isHeadFixed && (isHeadTopInViewport || isBodyBottomOutsideViewport)) {
             this.headWrapperElement.style.position = '';
@@ -184,7 +194,10 @@ export default class StickyTable {
         }
 
         if (isHeadFixed && bodyWrapperHeight + bodyWrapperOffestTop < bodyWrapperBottomLimit) {
-            this.headWrapperElement.style.transform = 'translate3d(0, ' + (bodyWrapperHeight + bodyWrapperOffestTop - bodyWrapperBottomLimit) + 'px, 0)';
+            this.headWrapperElement.style.transform =
+                'translate3d(0, ' +
+                (bodyWrapperHeight + bodyWrapperOffestTop - bodyWrapperBottomLimit) +
+                'px, 0)';
         } else {
             this.headWrapperElement.style.transform = '';
         }
@@ -197,8 +210,8 @@ export default class StickyTable {
 
     /**
      * Aligns horizontal scroll values between table head and body containers.
-     * 
-     * @returns 
+     *
+     * @returns
      */
     _syncHorizontalScroll(scrolledElement: HTMLElement, targetElement: HTMLElement) {
         const scrollLeft: number = scrolledElement.scrollLeft;
@@ -218,12 +231,13 @@ export default class StickyTable {
 
     /**
      * Handles horizontal scrolling.
-     * 
+     *
      * @param event - Scroll event.
      */
     _handleHorizontalScroll(event: WheelEvent) {
         const scrolledElement = event.target as HTMLElement;
-        const targetElement = (scrolledElement.nextSibling || scrolledElement.previousSibling) as HTMLElement;
+        const targetElement = (scrolledElement.nextSibling ||
+            scrolledElement.previousSibling) as HTMLElement;
 
         if (scrolledElement) {
             this._syncHorizontalScroll(scrolledElement, targetElement);
@@ -237,6 +251,10 @@ export default class StickyTable {
         this._syncHeadPosition();
     }
 
+    _handleWindowScrollThrottled() {
+        return this._throttle(this._handleWindowScroll.bind(this), 20);
+    }
+
     /**
      * Handles window resize.
      */
@@ -244,17 +262,29 @@ export default class StickyTable {
         this._syncHeadPosition();
     }
 
+    _handleWindowResizeThrottled() {
+        return this._throttle(this._handleWindowResize.bind(this), 20);
+    }
+
+    _handleHeadWrapperHorizontalScrollThrottled() {
+        return this._throttle(this._handleHorizontalScroll.bind(this), 10);
+    }
+
+    _handleBodyWrapperHorizontalScrollThrottled() {
+        return this._throttle(this._handleHorizontalScroll.bind(this), 10);
+    }
+
     /**
      * Executes the given function once in an interval.
-     * 
-     * @param func - callback function
+     *
+     * @param fn - callback function
      * @param wait - time to wait for next call
-     * @returns 
+     * @returns
      */
-    _throttle(func: Function, wait: number = 100): Function {
+    _throttle(func: (event: WheelEvent) => void, wait = 100): (args: any[]) => void {
         let timer: number | null = null;
-    
-        return  (...args: any) => {
+
+        return (...args: any) => {
             if (timer === null) {
                 timer = setTimeout(() => {
                     func.apply(this, args);
@@ -262,28 +292,31 @@ export default class StickyTable {
                 }, wait);
             }
         };
-    }    
+    }
 
     /**
      * Destroys the sticky table.
-     * 
+     *
      * @public
      */
     destroy() {
-        if (this._handleWindowScrollThrottled) {
-            window.removeEventListener('scroll', this._handleWindowScrollThrottled, false);
+        window.removeEventListener('scroll', this._handleWindowScrollThrottled, false);
+        window.removeEventListener('resize', this._handleWindowResizeThrottled);
+
+        if (this.headWrapperElement) {
+            this.headWrapperElement.removeEventListener(
+                'scroll',
+                this._handleBodyWrapperHorizontalScrollThrottled,
+                false
+            );
         }
 
-        if (this._handleWindowResizeThrottled) {
-            window.removeEventListener('resize', this._handleWindowResizeThrottled);
-        }
-        
-        if (this.headWrapperElement && this._handleBodyWrapperHorizontalScrollThrottled) {
-            this.headWrapperElement.removeEventListener('scroll', this._handleBodyWrapperHorizontalScrollThrottled, false);
-        }
-
-        if (this.bodyWrapperElement && this._handleBodyWrapperHorizontalScrollThrottled) {
-            this.bodyWrapperElement.removeEventListener('scroll', this._handleBodyWrapperHorizontalScrollThrottled, false);
+        if (this.bodyWrapperElement) {
+            this.bodyWrapperElement.removeEventListener(
+                'scroll',
+                this._handleBodyWrapperHorizontalScrollThrottled,
+                false
+            );
         }
     }
 }
