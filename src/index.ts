@@ -1,5 +1,5 @@
 export default class StickyTable {
-    el: HTMLTableElement;
+    el: HTMLTableElement | null;
     wrapperElement: HTMLElement | null;
     headWrapperElement: HTMLElement | null;
     bodyWrapperElement: HTMLElement | null;
@@ -339,5 +339,11 @@ export default class StickyTable {
         this.headWrapperElement?.remove();
         this.bodyWrapperElement?.remove();
         this.wrapperElement?.remove();
+
+        this.el = null;
+        this.headWrapperElement = null;
+        this.headTableElement = null;
+        this.bodyWrapperElement = null;
+        this.wrapperElement = null;
     }
 }
