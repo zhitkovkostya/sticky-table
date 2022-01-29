@@ -9,13 +9,13 @@ body {
     font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
+table {
+    border-collapse: collapse;
+}
+
 .card {
     max-width: 80rem;
     margin: 0 auto;
-}
-
-.table {
-    border-collapse: collapse;
 }
 
 .table__head .table__cell {
