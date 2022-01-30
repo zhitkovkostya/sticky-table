@@ -59,11 +59,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 ### Development
 
-Clone this repository and run
+Clone this repository and run:
 
-```js
+```
 npm start
 ```
+
+### Deployment
+
+Create .coveralls.yml to set your Coveralls token.
 
 ## Demo
 

@@ -9,7 +9,8 @@
     "start": "rollup -cw",
     "build": "rollup -c",
     "publish": "npm run build && gh-pages -d demo",
-    "lint": "eslint ./src --fix",
+    "lint": "eslint ./src",
+    "lint:fix": "npm run lint -- --cache --fix",
     "format": "prettier ./src --write --ignore-unknown",
     "test": "jest ./tests",
     "test:watch": "npm run test -- --watch",
@@ -18,8 +19,8 @@
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "eslint --cache --fix",
-      "prettier --ignore-unknown --write",
+      "npm run lint:fix",
+      "npm run format",
       "npm run test"
     ]
   },
