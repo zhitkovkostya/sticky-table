@@ -11,7 +11,10 @@
     "publish": "npm run build && gh-pages -d demo",
     "lint": "eslint ./src --fix",
     "format": "prettier ./src --write --ignore-unknown",
-    "test": "jest ./tests"
+    "test": "jest ./tests",
+    "test:watch": "npm run test -- --watch",
+    "test:coverage": "npm run test -- --coverage",
+    "test:coveralls": "npm run test:coverage && cat ./coverage/lcov.info | coveralls"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [

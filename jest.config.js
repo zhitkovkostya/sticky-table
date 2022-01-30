@@ -1,3 +1,9 @@
 module.exports = {
-    testEnvironment: 'jsdom'
+    testEnvironment: 'jsdom',
+    collectCoverageFrom: ['./src/**'],
+    coverageThreshold: {
+        global: {
+            lines: 70
+        }
+    }
 }
