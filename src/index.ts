@@ -291,7 +291,7 @@ export default class StickyTable {
      * Handles window resize.
      */
     _handleWindowResize() {
-        this._syncHeadPosition();
+        this._syncColumnWidth();
     }
 
     /**
