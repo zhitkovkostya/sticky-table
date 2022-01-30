@@ -28,6 +28,12 @@ npm install @zhitkov/sticky-table
 yarn add @zhitkov/sticky-table
 ```
 
+### script tag
+
+```
+<script src="https://unpkg.com/@zhitkov/sticky-table@latest/dist/bundle.umd.js"/>
+```
+
 ## Usage
 
 ```html

@@ -8,9 +8,15 @@ const bannerText = 'Vanilla Javascript Sticky Table v<%= pkg.version %>\n<%= pkg
 export default {
     input: 'src/index.ts',
     output: [{
-        file: 'dist/bundle.min.js',
+        file: 'dist/bundle.umd.js',
         name: 'StickyTable',
         format: 'umd'
+    }, {
+        file: 'dist/bundle.cjs.js',
+        format: 'cjs'
+    }, {
+        file: 'dist/bundle.esm.js',
+        format: 'es'
     }, {
         file: 'demo/bundle.min.js',
         name: 'StickyTable',
