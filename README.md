@@ -19,13 +19,13 @@
 ### npm
 
 ```
-npm install sticky-table
+npm install @zhitkov/sticky-table
 ```
 
 ### yarn
 
 ```
-yarn add sticky-table
+yarn add @zhitkov/sticky-table
 ```
 
 ## Usage
