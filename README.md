@@ -65,10 +65,6 @@ Clone this repository and run:
 npm start
 ```
 
-### Deployment
-
-Create .coveralls.yml to set your Coveralls token.
-
 ## Demo
 
 Check out the [demo](https://zhitkovkostya.github.io/sticky-table/)

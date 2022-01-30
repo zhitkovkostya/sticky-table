@@ -6,5 +6,4 @@ dist
 .idea
 .history
 .eslintcache
-.coveralls.yml
 coverage
