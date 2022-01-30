@@ -6,6 +6,8 @@
 
 > sticky-table is a library for sticky table headers written in TypeScript. With this library you can easily set sticky table headers on your website. It's responsive, accessible and super tiny.
 
+![Sticky Table Cover](https://repository-images.githubusercontent.com/448645679/64d17f01-6be4-415e-b783-5267e60d93c0)
+
 ## Features
 
 - Written in TypeScript, no dependencies needed
