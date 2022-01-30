@@ -53,10 +53,10 @@ export default class StickyTable {
 
         tableWrapperElement.className = 'js-table-wrapper';
 
-        if (this.el.parentNode) {
+        if (this.el && this.el.parentNode) {
             this.el.parentNode.insertBefore(tableWrapperElement, this.el);
+            tableWrapperElement.append(this.el);
         }
-        tableWrapperElement.append(this.el);
         this.wrapperElement = tableWrapperElement;
     }
 
@@ -64,7 +64,9 @@ export default class StickyTable {
      * Wraps table head in a new table with a scrollable container.
      */
     _wrapTableHead() {
-        const tableHeadOriginalElement: HTMLTableSectionElement | null = this.el.tHead;
+        const tableHeadOriginalElement: HTMLTableSectionElement | null = this.el
+            ? this.el.tHead
+            : null;
 
         if (!tableHeadOriginalElement) {
             throw new Error('<thead> is missing');
@@ -102,8 +104,10 @@ export default class StickyTable {
         this.bodyWrapperElement.className = 'js-table-body-wrapper';
         this.bodyWrapperElement.style.overflowX = 'auto';
 
-        this.wrapperElement?.insertBefore(this.bodyWrapperElement, this.el);
-        this.bodyWrapperElement.appendChild(this.el);
+        if (this.el) {
+            this.wrapperElement?.insertBefore(this.bodyWrapperElement, this.el);
+            this.bodyWrapperElement.appendChild(this.el);
+        }
 
         this.bodyWrapperElement.addEventListener(
             'scroll',
@@ -227,7 +231,9 @@ export default class StickyTable {
      * @param isShow - toggle state.
      */
     _toggleHeadVisibility(isShow = false) {
-        const tableHeadOriginalElement: HTMLTableSectionElement | null = this.el.tHead;
+        const tableHeadOriginalElement: HTMLTableSectionElement | null = this.el
+            ? this.el.tHead
+            : null;
 
         if (!tableHeadOriginalElement) {
             throw new Error('<thead> is missing');
