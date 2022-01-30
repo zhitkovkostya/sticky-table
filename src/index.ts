@@ -125,6 +125,7 @@ export default class StickyTable {
 
         let headTableCellElement: HTMLTableCellElement;
         let bodyTableCellWidth: number;
+        let bodyTableCellStyle: CSSStyleDeclaration;
 
         if (
             !headTableElement ||
@@ -137,11 +138,18 @@ export default class StickyTable {
 
         for (const bodyTableRowElement of bodyTableElement.tHead.rows) {
             for (const bodyTableCellElement of bodyTableRowElement.cells) {
-                bodyTableCellWidth = bodyTableCellElement.offsetWidth;
                 headTableCellElement =
                     headTableElement.tHead.rows[bodyTableRowElement.rowIndex].cells[
                         bodyTableCellElement.cellIndex
                     ];
+                bodyTableCellStyle = window.getComputedStyle(bodyTableCellElement);
+                bodyTableCellWidth = Number(
+                    bodyTableCellElement.getBoundingClientRect().width.toFixed(2)
+                );
+                if (bodyTableCellStyle.boxSizing === 'content-box') {
+                    bodyTableCellWidth -= parseFloat(bodyTableCellStyle.paddingLeft);
+                    bodyTableCellWidth -= parseFloat(bodyTableCellStyle.paddingRight);
+                }
 
                 headTableCellElement.style.minWidth = `${bodyTableCellWidth}px`;
                 headTableCellElement.style.maxWidth = `${bodyTableCellWidth}px`;
