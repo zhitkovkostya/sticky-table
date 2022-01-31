@@ -1,9 +1,10 @@
 # sticky-table
 
-![Build Status](https://github.com/zhitkovkostya/sticky-table/actions/workflows/coverage.yml/badge.svg)
-![Codecov](https://img.shields.io/codecov/c/github/zhitkovkostya/sticky-table)
-![Gzip Size](https://img.badgesize.io/zhitkovkostya/sticky-table/master/demo/bundle.min.js?compression=gzip)
-![GitHub](https://img.shields.io/github/license/zhitkovkostya/sticky-table)
+[![npm version](https://img.shields.io/npm/v/@zhitkov/sticky-table)](https://www.npmjs.com/package/@zhitkov/sticky-table)
+[![Build Status](https://github.com/zhitkovkostya/sticky-table/actions/workflows/coverage.yml/badge.svg)](https://github.com/zhitkovkostya/sticky-table/actions/workflows/coverage.yml)
+[![Codecov](https://img.shields.io/codecov/c/github/zhitkovkostya/sticky-table)](https://app.codecov.io/gh/zhitkovkostya/sticky-table)
+[![Gzip Size](https://img.badgesize.io/zhitkovkostya/sticky-table/master/demo/bundle.min.js?compression=gzip)](https://www.npmjs.com/package/@zhitkov/sticky-table)
+[![GitHub](https://img.shields.io/github/license/zhitkovkostya/sticky-table)](https://opensource.org/licenses/MIT)
 
 > sticky-table is a library for sticky table headers written in TypeScript. With this library you can easily set sticky table headers on your website. It's responsive, accessible and super tiny.
 
