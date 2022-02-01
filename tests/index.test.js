@@ -13,15 +13,15 @@ afterEach(() => {
     table.destroy();
 });
 
-test('table wrapper is created', () => {
+test('wrapper is created', () => {
     expect(table.wrapperElement).toBeDefined();
 });
 
 
-test('table head wrapper is created', () => {
-    expect(table.headWrapperElement).toBeDefined();
+test('fixed table wrapper is created', () => {
+    expect(table.fixedTableWrapperElement).toBeDefined();
 });
 
-test('table body wrapper is created', () => {
-    expect(table.bodyWrapperElement).toBeDefined();
+test('original table wrapper is created', () => {
+    expect(table.originalTableWrapperElement).toBeDefined();
 });
