@@ -7,8 +7,8 @@ export default class StickyTable {
     scrollLeft?: number;
     _handleWindowScrollThrottled: any;
     _handleWindowResizeThrottled: any;
-    _handleHeadWrapperHorizontalScrollThrottled: any;
-    _handleBodyWrapperHorizontalScrollThrottled: any;
+    _handleFixedTableWrapperScrollThrottled: any;
+    _handleOriginalTableWrapperScrollThrottled: any;
 
     /**
      * Initial render of the table.
@@ -21,15 +21,15 @@ export default class StickyTable {
         this.originalTableWrapperElement = this._wrapTableBody();
         this.fixedTableWrapperElement = this._wrapTableHead();
         this.fixedTableElement = this.fixedTableWrapperElement.querySelector('table');
-        this.scrollLeft = 0;
+        this.scrollLeft = this.originalTableElement.scrollLeft;
         this._handleWindowScrollThrottled = this._throttle(this._handleWindowScroll.bind(this), 20);
         this._handleWindowResizeThrottled = this._throttle(this._handleWindowResize.bind(this), 20);
-        this._handleHeadWrapperHorizontalScrollThrottled = this._throttle(
-            this._handleHorizontalScroll.bind(this),
+        this._handleFixedTableWrapperScrollThrottled = this._throttle(
+            this._handleFixedTableWrapperScroll.bind(this),
             20
         );
-        this._handleBodyWrapperHorizontalScrollThrottled = this._throttle(
-            this._handleHorizontalScroll.bind(this),
+        this._handleOriginalTableWrapperScrollThrottled = this._throttle(
+            this._handleOriginalTableWrapperScroll.bind(this),
             20
         );
 
@@ -38,12 +38,12 @@ export default class StickyTable {
 
         this.fixedTableWrapperElement.addEventListener(
             'scroll',
-            this._handleHeadWrapperHorizontalScrollThrottled,
+            this._handleFixedTableWrapperScrollThrottled,
             false
         );
         this.originalTableWrapperElement.addEventListener(
             'scroll',
-            this._handleBodyWrapperHorizontalScrollThrottled,
+            this._handleOriginalTableWrapperScrollThrottled,
             false
         );
 
@@ -57,18 +57,18 @@ export default class StickyTable {
      * @returns wrapper element
      */
     _wrapTable(): HTMLElement {
-        const tableWrapperElement: HTMLElement = document.createElement('div');
+        const wrapperElement: HTMLElement = document.createElement('div');
 
-        tableWrapperElement.className = 'js-table-wrapper';
+        wrapperElement.className = 'js-table-wrapper';
 
         if (this.originalTableElement && this.originalTableElement.parentNode) {
             this.originalTableElement.parentNode.insertBefore(
-                tableWrapperElement,
+                wrapperElement,
                 this.originalTableElement
             );
-            tableWrapperElement.append(this.originalTableElement);
+            wrapperElement.appendChild(this.originalTableElement);
         }
-        return tableWrapperElement;
+        return wrapperElement;
     }
 
     /**
@@ -278,16 +278,31 @@ export default class StickyTable {
     }
 
     /**
-     * Handles horizontal scrolling.
+     * Handles horizontal scrolling for fixed table wrapper.
      *
      * @param event - scroll event.
      */
-    _handleHorizontalScroll(event: WheelEvent) {
-        const scrolledWrapperElement = event.target as HTMLElement;
-        const targetWrapperElement = (scrolledWrapperElement.nextSibling ||
-            scrolledWrapperElement.previousSibling) as HTMLElement;
+    _handleFixedTableWrapperScroll(event: WheelEvent) {
+        if (this.fixedTableWrapperElement && this.originalTableWrapperElement) {
+            this._syncHorizontalScroll(
+                this.fixedTableWrapperElement,
+                this.originalTableWrapperElement
+            );
+        }
+    }
 
-        this._syncHorizontalScroll(scrolledWrapperElement, targetWrapperElement);
+    /**
+     * Handles horizontal scrolling for original table wrapper.
+     *
+     * @param event - scroll event.
+     */
+    _handleOriginalTableWrapperScroll(event: WheelEvent) {
+        if (this.fixedTableWrapperElement && this.originalTableWrapperElement) {
+            this._syncHorizontalScroll(
+                this.originalTableWrapperElement,
+                this.fixedTableWrapperElement
+            );
+        }
     }
 
     /**
@@ -335,13 +350,13 @@ export default class StickyTable {
 
         this.fixedTableWrapperElement?.removeEventListener(
             'scroll',
-            this._handleHeadWrapperHorizontalScrollThrottled,
+            this._handleFixedTableWrapperScrollThrottled,
             false
         );
 
         this.originalTableWrapperElement?.removeEventListener(
             'scroll',
-            this._handleBodyWrapperHorizontalScrollThrottled,
+            this._handleOriginalTableWrapperScrollThrottled,
             false
         );
 
