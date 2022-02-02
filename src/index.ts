@@ -171,6 +171,22 @@ export default class StickyTable {
     }
 
     /**
+     * Updates fixed table wrapper width based on original table wrapper.
+     */
+    _syncFixedTableWrapperWidth() {
+        if (this.fixedTableWrapperElement && this.originalTableWrapperElement) {
+            const { width: fixedTableWrapperWidth } =
+                this.fixedTableWrapperElement.getBoundingClientRect();
+            const { width: originalTableWrapperWidth } =
+                this.originalTableWrapperElement.getBoundingClientRect();
+
+            if (fixedTableWrapperWidth !== originalTableWrapperWidth) {
+                this.fixedTableWrapperElement.style.width = originalTableWrapperWidth + 'px';
+            }
+        }
+    }
+
+    /**
      * Fixes table head to the top of the viewport.
      */
     _syncHeadPosition() {
@@ -227,11 +243,6 @@ export default class StickyTable {
                 'px, 0)';
         } else {
             this.fixedTableWrapperElement.style.transform = '';
-        }
-
-        // Sync table head width with its body on window resize
-        if (fixedTableWrapperWidth !== originalTableWrapperWidth) {
-            this.fixedTableWrapperElement.style.width = originalTableWrapperWidth + 'px';
         }
     }
 
@@ -317,7 +328,7 @@ export default class StickyTable {
      */
     _handleWindowResize() {
         this._syncColumnWidth();
-        this._syncHeadPosition();
+        this._syncFixedTableWrapperWidth();
     }
 
     /**
