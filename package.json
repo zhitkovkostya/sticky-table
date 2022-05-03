@@ -1,6 +1,6 @@
 {
   "name": "@zhitkov/sticky-table",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A tiny pure JavaScript sticky table.",
   "main": "index.js",
   "files": ["dist"],

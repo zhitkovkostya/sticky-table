@@ -1,19 +1,19 @@
 export default class StickyTable {
-    wrapperElement?: HTMLElement;
-    originalTableWrapperElement?: HTMLElement;
+    wrapperElement?: HTMLDivElement;
+    originalTableWrapperElement?: HTMLDivElement;
     originalTableElement?: HTMLTableElement;
-    fixedTableWrapperElement?: HTMLElement;
+    fixedTableWrapperElement?: HTMLDivElement;
     fixedTableElement?: HTMLTableElement | null;
     scrollLeft?: number;
-    _handleWindowScrollThrottled: any;
-    _handleWindowResizeThrottled: any;
-    _handleFixedTableWrapperScrollThrottled: any;
-    _handleOriginalTableWrapperScrollThrottled: any;
+    _handleWindowScrollThrottled: (args: any) => void;
+    _handleWindowResizeThrottled: (args: any) => void;
+    _handleFixedTableWrapperScrollThrottled: (args: any) => void;
+    _handleOriginalTableWrapperScrollThrottled: (args: any) => void;
 
     /**
      * Initial render of the table.
      *
-     * @param tableElement - Table DOM element.
+     * @param tableElement Table DOM element.
      */
     constructor(tableElement: HTMLTableElement) {
         this.originalTableElement = tableElement;
@@ -56,8 +56,8 @@ export default class StickyTable {
      *
      * @returns wrapper element
      */
-    _wrapTable(): HTMLElement {
-        const wrapperElement: HTMLElement = document.createElement('div');
+    _wrapTable(): HTMLDivElement {
+        const wrapperElement = document.createElement('div');
 
         wrapperElement.className = 'js-table-wrapper';
 
@@ -76,8 +76,8 @@ export default class StickyTable {
      *
      * @returns fixed table wrapper element
      */
-    _wrapTableHead(): HTMLElement {
-        const originalTableHeadElement: HTMLTableSectionElement | null = this.originalTableElement
+    _wrapTableHead(): HTMLDivElement {
+        const originalTableHeadElement = this.originalTableElement
             ? this.originalTableElement.tHead
             : null;
 
@@ -112,7 +112,7 @@ export default class StickyTable {
      *
      * @returns original table wrapper element
      */
-    _wrapTableBody(): HTMLElement {
+    _wrapTableBody(): HTMLDivElement {
         const originalTableWrapperElement = document.createElement('div');
 
         originalTableWrapperElement.className = 'js-table-body-wrapper';
@@ -136,10 +136,6 @@ export default class StickyTable {
         const fixedTableElement = this.fixedTableElement;
         const originalTableElement = this.originalTableElement;
 
-        let fixedTableHeaderElement: HTMLTableCellElement;
-        let originalTableHeaderWidth: number;
-        let originalTableHeaderStyle: CSSStyleDeclaration;
-
         if (
             !fixedTableElement ||
             !originalTableElement ||
@@ -151,14 +147,17 @@ export default class StickyTable {
 
         for (const originalTableRowElement of originalTableElement.tHead.rows) {
             for (const originalTableHeaderElement of originalTableRowElement.cells) {
-                fixedTableHeaderElement =
+                const fixedTableHeaderElement =
                     fixedTableElement.tHead.rows[originalTableRowElement.rowIndex].cells[
                         originalTableHeaderElement.cellIndex
                     ];
-                originalTableHeaderStyle = window.getComputedStyle(originalTableHeaderElement);
-                originalTableHeaderWidth = Number(
+                const originalTableHeaderStyle = window.getComputedStyle(
+                    originalTableHeaderElement
+                );
+                let originalTableHeaderWidth = Number(
                     originalTableHeaderElement.getBoundingClientRect().width.toFixed(2)
                 );
+
                 if (originalTableHeaderStyle.boxSizing === 'content-box') {
                     originalTableHeaderWidth -= parseFloat(originalTableHeaderStyle.paddingLeft);
                     originalTableHeaderWidth -= parseFloat(originalTableHeaderStyle.paddingRight);
@@ -195,7 +194,7 @@ export default class StickyTable {
         }
 
         let isFixed = this.fixedTableWrapperElement.dataset.isFixed === 'true';
-        const { width: fixedTableWrapperWidth, height: fixedTableWrapperHeight } =
+        const { height: fixedTableWrapperHeight } =
             this.fixedTableWrapperElement.getBoundingClientRect();
         const {
             top: originalTableWrapperOffsetTop,
@@ -231,26 +230,20 @@ export default class StickyTable {
             isFixed = true;
         }
 
-        if (
-            isFixed &&
-            originalTableWrapperHeight + originalTableWrapperOffsetTop < originalTableBottomLimit
-        ) {
-            this.fixedTableWrapperElement.style.transform =
-                'translate3d(0, ' +
-                (originalTableWrapperHeight +
-                    originalTableWrapperOffsetTop -
-                    originalTableBottomLimit) +
-                'px, 0)';
-        } else {
-            this.fixedTableWrapperElement.style.transform = '';
-        }
+        const isNeedToShift =
+            originalTableWrapperHeight + originalTableWrapperOffsetTop < originalTableBottomLimit;
+        const translateY =
+            originalTableWrapperHeight + originalTableWrapperOffsetTop - originalTableBottomLimit;
+
+        this.fixedTableWrapperElement.style.transform =
+            isFixed && isNeedToShift ? `translate3d(0, ${translateY}px, 0)` : '';
     }
 
     /**
      * Aligns horizontal scroll values between table head and body containers.
      */
-    _syncHorizontalScroll(scrolledElement: HTMLElement, targetElement: HTMLElement) {
-        const scrollLeft: number = scrolledElement.scrollLeft;
+    _syncHorizontalScroll(scrolledElement: HTMLDivElement, targetElement: HTMLDivElement) {
+        const scrollLeft = scrolledElement.scrollLeft;
 
         if (this.scrollLeft !== scrollLeft) {
             this.scrollLeft = scrollLeft;
@@ -261,21 +254,17 @@ export default class StickyTable {
     /**
      * Accessibly hides or shows table head an innder cells.
      *
-     * @param headElement - table head element.
-     * @param isShow - toggle state.
+     * @param headElement Table head element.
+     * @param isShow Toggle state.
      */
     _toggleHeadVisibility(headElement?: HTMLTableSectionElement, isShow = false) {
         if (!headElement) {
             throw new Error('<thead> is missing');
         }
 
-        const headRows: Array<HTMLTableRowElement> = Array.from(headElement.rows);
-        const headCellsByRow: Array<Array<HTMLTableCellElement>> = headRows.map((rowElement) =>
-            Array.from(rowElement.cells)
-        );
-        const headCells: Array<HTMLTableCellElement> = ([] as Array<HTMLTableCellElement>).concat(
-            ...headCellsByRow
-        );
+        const headRows = Array.from(headElement.rows);
+        const headCellsByRow = headRows.map((rowElement) => Array.from(rowElement.cells));
+        const headCells = ([] as Array<HTMLTableCellElement>).concat(...headCellsByRow);
 
         // Visibility collapse hides the table head visually, but makes it visible for screen readers.
         headElement.style.visibility = isShow ? '' : 'collapse';
@@ -291,7 +280,7 @@ export default class StickyTable {
     /**
      * Handles horizontal scrolling for fixed table wrapper.
      *
-     * @param event - scroll event.
+     * @param event Scroll event.
      */
     _handleFixedTableWrapperScroll(event: WheelEvent) {
         if (this.fixedTableWrapperElement && this.originalTableWrapperElement) {
@@ -305,7 +294,7 @@ export default class StickyTable {
     /**
      * Handles horizontal scrolling for original table wrapper.
      *
-     * @param event - scroll event.
+     * @param event Scroll event.
      */
     _handleOriginalTableWrapperScroll(event: WheelEvent) {
         if (this.fixedTableWrapperElement && this.originalTableWrapperElement) {
@@ -334,8 +323,8 @@ export default class StickyTable {
     /**
      * Executes the given function once in an interval.
      *
-     * @param fn - callback function
-     * @param wait - time to wait for next call
+     * @param func Callback function
+     * @param wait Time to wait for next call
      * @returns callback function
      */
     _throttle(func: (event: WheelEvent) => void, wait = 100): (args: any[]) => void {
