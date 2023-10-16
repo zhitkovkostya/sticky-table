@@ -5,6 +5,7 @@ export default class StickyTable {
     fixedTableWrapperElement?: HTMLDivElement;
     fixedTableElement?: HTMLTableElement | null;
     scrollLeft?: number;
+    scrollElement?: HTMLElement;
     _handleWindowScrollThrottled: (args: any) => void;
     _handleWindowResizeThrottled: (args: any) => void;
     _handleFixedTableWrapperScrollThrottled: (args: any) => void;
@@ -14,8 +15,10 @@ export default class StickyTable {
      * Initial render of the table.
      *
      * @param tableElement Table DOM element.
+     * @param scrollElement Element that tableElement will respond on scrolling
      */
-    constructor(tableElement: HTMLTableElement) {
+    constructor(tableElement: HTMLTableElement, scrollElement: HTMLElement) {
+        this.scrollElement = scrollElement;
         this.originalTableElement = tableElement;
         this.wrapperElement = this._wrapTable();
         this.originalTableWrapperElement = this._wrapTableBody();
@@ -41,13 +44,20 @@ export default class StickyTable {
             this._handleFixedTableWrapperScrollThrottled,
             false
         );
+
         this.originalTableWrapperElement.addEventListener(
             'scroll',
             this._handleOriginalTableWrapperScrollThrottled,
             false
         );
 
-        window.addEventListener('scroll', this._handleWindowScrollThrottled, false);
+        if (this.scrollElement) {
+            this.scrollElement.addEventListener('scroll', this._handleWindowScrollThrottled, false);
+        }
+        else {
+            window.addEventListener('scroll', this._handleWindowScrollThrottled, false);
+        }
+
         window.addEventListener('resize', this._handleWindowResizeThrottled);
     }
 
@@ -85,15 +95,18 @@ export default class StickyTable {
             throw new Error('<thead> is missing');
         }
 
+        // Create new elements
         const fixedTableHeadElement = originalTableHeadElement.cloneNode(true);
         const fixedTableWrapperElement = document.createElement('div');
         const fixedTableElement = document.createElement('table');
 
+        // set styles
+        fixedTableElement.className = this.originalTableElement ? this.originalTableElement.className : '';
         this._toggleHeadVisibility(originalTableHeadElement, false);
 
         fixedTableWrapperElement.className = 'js-table-head-wrapper';
         fixedTableWrapperElement.dataset.isFixed = 'false';
-        fixedTableWrapperElement.style.overflowX = 'auto';
+        fixedTableWrapperElement.style.overflowX = 'hidden';
         fixedTableWrapperElement.ariaHidden = 'true';
         fixedTableWrapperElement.appendChild(fixedTableElement).appendChild(fixedTableHeadElement);
 
@@ -148,14 +161,12 @@ export default class StickyTable {
         for (const originalTableRowElement of originalTableElement.tHead.rows) {
             for (const originalTableHeaderElement of originalTableRowElement.cells) {
                 const fixedTableHeaderElement =
-                    fixedTableElement.tHead.rows[originalTableRowElement.rowIndex].cells[
-                        originalTableHeaderElement.cellIndex
-                    ];
-                const originalTableHeaderStyle = window.getComputedStyle(
-                    originalTableHeaderElement
-                );
-                let originalTableHeaderWidth = Number(
-                    originalTableHeaderElement.getBoundingClientRect().width.toFixed(2)
+                    fixedTableElement.tHead.rows[originalTableRowElement.rowIndex]
+                        .cells[originalTableHeaderElement.cellIndex];
+
+                const originalTableHeaderStyle = window.getComputedStyle(originalTableHeaderElement);
+                let originalTableHeaderWidth = Number(originalTableHeaderElement
+                    .getBoundingClientRect().width.toFixed(2)
                 );
 
                 if (originalTableHeaderStyle.boxSizing === 'content-box') {
@@ -194,19 +205,29 @@ export default class StickyTable {
         }
 
         let isFixed = this.fixedTableWrapperElement.dataset.isFixed === 'true';
-        const { height: fixedTableWrapperHeight } =
-            this.fixedTableWrapperElement.getBoundingClientRect();
+        const fixedTableWrapperHeight = this.fixedTableWrapperElement.getBoundingClientRect().height;
+
         const {
             top: originalTableWrapperOffsetTop,
             width: originalTableWrapperWidth,
             height: originalTableWrapperHeight,
         } = this.originalTableWrapperElement.getBoundingClientRect();
-        const fixedTableTopLimit = isFixed ? 0 : fixedTableWrapperHeight;
-        const originalTableBottomLimit = fixedTableWrapperHeight * 2;
+
+        //offset from top of the page to the top of thead
+        //_tryGetSearchComponentsHeight is added to make it NOT overlap with sticky-search-components
+        const scrollElementsTopOffsetSum = this._tryGetScrollElementTopOffset() + this._tryGetSearchComponentsHeight();;
+
+        //Offset from top of the page to the thead bottom 
+        const tableHeaderBottom = scrollElementsTopOffsetSum + fixedTableWrapperHeight
+
+        // When TOP limit is exceeded, thead becomes fixed (sticky like behaviour)
+        // "isFixed ?" is here to remove fixed => thead scrolls with the page (normal page behaviour)
+        const fixedTableTopLimit = isFixed ? scrollElementsTopOffsetSum : tableHeaderBottom;
         const isOriginalTableTopInViewport = originalTableWrapperOffsetTop >= fixedTableTopLimit;
+
+        // When thead hits bottom limit, "fixed" will be removed for normal page behaviour (We have scrolled table out of view)
         const isOriginalTableBottomOutsideViewport =
-            originalTableWrapperHeight + originalTableWrapperOffsetTop - fixedTableWrapperHeight <=
-            0;
+            originalTableWrapperHeight + originalTableWrapperOffsetTop - tableHeaderBottom <= 0;
 
         if (isFixed && (isOriginalTableTopInViewport || isOriginalTableBottomOutsideViewport)) {
             this.fixedTableWrapperElement.style.position = '';
@@ -222,7 +243,7 @@ export default class StickyTable {
             !isOriginalTableBottomOutsideViewport
         ) {
             this.fixedTableWrapperElement.style.position = 'fixed';
-            this.fixedTableWrapperElement.style.top = '0';
+            this.fixedTableWrapperElement.style.top = scrollElementsTopOffsetSum + 'px';
             this.fixedTableWrapperElement.style.zIndex = '2';
             this.fixedTableWrapperElement.style.width = originalTableWrapperWidth + 'px';
             this.originalTableWrapperElement.style.paddingTop = fixedTableWrapperHeight + 'px';
@@ -230,6 +251,7 @@ export default class StickyTable {
             isFixed = true;
         }
 
+        const originalTableBottomLimit = fixedTableWrapperHeight * 2;
         const isNeedToShift =
             originalTableWrapperHeight + originalTableWrapperOffsetTop < originalTableBottomLimit;
         const translateY =
@@ -340,13 +362,40 @@ export default class StickyTable {
         };
     }
 
+    /** 
+    * @returns this.scrollElement.offsetTop or 0 if undefined
+    */
+    _tryGetScrollElementTopOffset() {
+        return this.scrollElement ? this.scrollElement.offsetTop : 0;
+    }
+
+    /**
+     * 
+     */
+    _tryGetSearchComponentsHeight() {
+        const searchComponents = document.getElementsByClassName('sticky-search-components');
+
+        if (!searchComponents || searchComponents.length < 1) {
+            return 0;
+        }
+
+        return searchComponents[0].getBoundingClientRect().height;
+    }
+
     /**
      * Destroys the sticky table.
      *
      * @public
      */
     destroy() {
-        window.removeEventListener('scroll', this._handleWindowScrollThrottled, false);
+        if (this.scrollElement) {
+            this.scrollElement.removeEventListener('scroll', this._handleWindowScrollThrottled, false);
+        }
+        else {
+            window.removeEventListener('scroll', this._handleWindowScrollThrottled, false);
+        }
+
+
         window.removeEventListener('resize', this._handleWindowResizeThrottled);
 
         this.fixedTableWrapperElement?.removeEventListener(
